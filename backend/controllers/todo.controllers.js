@@ -1,28 +1,20 @@
-const asyncWrapper = require("express-async-handler");
-const { createCustomError } = require("../errors/custom-error");
 const Todo = require("../models/todo.models");
+const asyncWrapper = require("../middleware/async");
+const { createCustomError } = require("../errors/custom-error");
 
-const createTodo = asyncWrapper(async (req, res) => {
-  try {
-    const todo = req.body;
-    res.status(201).json(todo);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+const getAllTodo = asyncWrapper(async (req, res) => {
+  const allTodo = await Todo.find({});
+  res.status(200).json({ allTodo });
 });
 
-const getAllTodo = async (req, res) => {
-  try {
-    const allTodo = await Todo.find({});
-    res.status(200).json(allTodo);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+const createTodo = asyncWrapper(async (req, res) => {
+  const todo = await Todo.create(req.body);
+  res.status(201).json({ todo });
+});
 
 const getTodoById = asyncWrapper(async (req, res, next) => {
   const { id: todoID } = req.params;
-  const todo = await Todo.findById({ _id: todoID });
+  const todo = await Todo.findOne({ _id: todoID });
   if (!todo) {
     return next(createCustomError(`No task with id ${todoID}`, 404));
   }
@@ -31,7 +23,7 @@ const getTodoById = asyncWrapper(async (req, res, next) => {
 
 const updateTodo = asyncWrapper(async (req, res, next) => {
   const { id: todoID } = req.params;
-  const todo = await Todo.findByIdAndUpdate({ _id: todoID }, req.body, {
+  const todo = await Todo.findOneAndUpdate({ _id: todoID }, req.body, {
     new: true,
     runValidators: true,
   });
@@ -45,7 +37,7 @@ const updateTodo = asyncWrapper(async (req, res, next) => {
 
 const deleteTodo = asyncWrapper(async (req, res) => {
   const { id: todoID } = req.params;
-  const todo = await Todo.findByIdAndDelete({ _id: todoID });
+  const todo = await Todo.findOneAndDelete({ _id: todoID });
 
   if (!todo) {
     return next(createCustomError(`No task with id ${todoID}`, 404));
