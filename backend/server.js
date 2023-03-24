@@ -9,17 +9,19 @@ const cors = require("cors");
 
 const app = express();
 
+app.use(express.static("./public"));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 // cors
-app.use(
-  cors({
-    origin: ["http://localhost:3000", "https://todo-list-alx.onrender.com"],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: ["http://localhost:3000", "https://todo-list-alx.onrender.com"],
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//     credentials: true,
+//   })
+// );
 
 // routes
 app.use("/todo", todoRouter);
@@ -31,7 +33,7 @@ app.get("", (req, res) => {
 // error
 app.use(notFound);
 app.use(errorHandlerMiddleware);
-
+app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 const start = async () => {
