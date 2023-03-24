@@ -1,0 +1,161 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Todo List API",
+      "description": "Simple TODO List API implementation",
+      "host": "https://todo-list-alx.onrender.com",
+      "basePath": "/",
+      "tags": [
+        {
+          "name": "Todo",
+          "description": "API for users in the system"
+        }
+      ]
+    },
+    "paths": {
+      "/todo": {
+        "get": {
+          "tags": ["Todo"],
+          "summary": "Get all todo",
+          "responses": {
+            "200": {
+              "description": "Returns a list of todos",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {"type": "string"},
+                    "name": {"type": "string"},
+                    "completed": {"type": "boolean"}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Todo"],
+          "summary": "Create a todo",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {"type": "string"},
+                  "completed": {"type": "boolean"}
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Returns the created todo",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {"type": "string"},
+                  "name": {"type": "string"},
+                  "completed": {"type": "boolean"}
+                }
+              }
+            }
+          }
+        }
+      },
+      "/todo/{id}": {
+        "get": {
+          "tags": ["Todo"],
+          "summary": "Get a single todo by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Returns the specified todo",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {"type": "string"},
+                  "name": {"type": "string"},
+                  "completed": {"type": "boolean"}
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": ["Todo"],
+          "summary": "Update a todo by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {"type": "string"},
+                  "completed": {"type": "boolean"}
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Returns the updated todo",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {"type": "string"},
+                  "name": {"type": "string"},
+                  "completed": {"type": "boolean"}
+                  }
+                  }
+                  }
+                  }
+                  },
+                  "delete": {
+                  "tags": ["Todo"],
+                  "summary": "Delete a todo by ID",
+                  "parameters": [
+                  {
+                  "name": "id",
+                  "in": "path",
+                  "required": true,
+                  "type": "string"
+                  }
+                  ],
+                  "responses": {
+                  "200": {
+                  "description": "Returns the deleted todo",
+                  "schema": {
+                  "type": "object",
+                  "properties": {
+                  "id": {"type": "string"},
+                  "name": {"type": "string"},
+                  "completed": {"type": "boolean"}
+                  }
+                  }
+                  }
+                  }
+                  }
+                  }
+                  }
+                  }
+  

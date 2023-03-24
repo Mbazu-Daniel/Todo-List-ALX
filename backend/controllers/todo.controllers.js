@@ -2,7 +2,7 @@ const Todo = require("../models/todo.models");
 const asyncWrapper = require("../middleware/async");
 const { createCustomError } = require("../errors/custom-error");
 
-const getAllTodos = asyncWrapper(async (req, res) => {
+const getAllTodo = asyncWrapper(async (req, res) => {
   const todos = await Todo.find({});
   res.status(200).json({ todos });
 });
@@ -27,7 +27,9 @@ const deleteTodo = asyncWrapper(async (req, res, next) => {
   if (!todo) {
     return next(createCustomError(`No todo with id : ${todoID}`, 404));
   }
-  res.status(200).json({ todo });
+  res
+    .status(204)
+    .json({ msg: ` Todo with id : ${todoID} deleted successfully` });
 });
 const updateTodo = asyncWrapper(async (req, res, next) => {
   const { id: todoID } = req.params;
@@ -41,11 +43,11 @@ const updateTodo = asyncWrapper(async (req, res, next) => {
     return next(createCustomError(`No todo with id : ${todoID}`, 404));
   }
 
-  res.status(200).json({ todo });
+  res.status(201).json({ todo });
 });
 
 module.exports = {
-  getAllTodos,
+  getAllTodo,
   createTodo,
   getTodo,
   updateTodo,
