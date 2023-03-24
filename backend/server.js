@@ -4,16 +4,15 @@ require("dotenv").config();
 const todoRouter = require("./routes/todo.routes");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 const notFound = require("./middleware/not-found");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
 
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.baseUrl}${req.url}`);
-});
+// app.use(express.json());
 
 // routes
 app.use("/todo", todoRouter);
@@ -23,8 +22,14 @@ app.get("", (req, res) => {
 });
 
 // error
-// app.use(notFound);
-// app.use(errorHandlerMiddleware);
+app.use(notFound);
+app.use(errorHandlerMiddleware);
+// cors
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 const PORT = process.env.PORT || 5000;
 
