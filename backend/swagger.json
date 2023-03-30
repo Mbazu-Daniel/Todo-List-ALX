@@ -1,8 +1,14 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Bytefront",
-    "version": "1.0.0"
+    "title": "Bytefront Todo List API",
+    "version": "1.0.0",
+    "description": "Simple Todo list application for alx project",
+    "host": "https://todo-list-alx.onrender.com/api-docs/",
+    "contact": {
+      "name": "Daniel Mbazu",
+      "email": "Mbazudaniel97@gmail.com"
+    }
   },
   "paths": {
     "/user/register": {
