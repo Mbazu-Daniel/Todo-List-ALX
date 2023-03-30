@@ -5,7 +5,9 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   }
   return res
     .status(500)
-    .json({ msg: "Something went wrong, please try again" });
+    .json({
+      msg: "Something went wrong, please try again or check if there is token on the header",
+    });
 };
 
 module.exports = errorHandlerMiddleware;

@@ -3,7 +3,7 @@ const User = require("../models/users.models");
 const { generateToken } = require("../config/jwtToken");
 
 const createUser = asyncHandler(async (req, res) => {
-  const { email, username } = req.body;
+  const { name, email, username, password } = req.body;
 
   const findUserEmail = await User.findOne({ email: email });
 

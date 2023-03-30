@@ -9,13 +9,21 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
+const { authenticateToken } = require("./middleware/authMiddleware");
 const app = express();
+authenticateToken;
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Swagger UI
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use(
+//   "/api-docs",
+//   authenticateToken,
+//   swaggerUi.serve,
+//   swaggerUi.setup(swaggerDocument)
+// );
 // routes
 app.use("/todo", todoRouter);
 app.use("/user", userRouter);
@@ -26,7 +34,7 @@ app.get("", (req, res) => {
 
 // error
 app.use(notFound);
-app.use(errorHandlerMiddleware);
+// app.use(errorHandlerMiddleware);
 app.use(cors());
 
 const PORT = process.env.PORT || 5000;

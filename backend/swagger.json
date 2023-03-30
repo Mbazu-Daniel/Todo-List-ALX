@@ -1,146 +1,194 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
-    "title": "Todo List API",
-    "description": "Simple TODO List API implementation",
-    "host": "https://todo-list-alx.onrender.com",
-    "basePath": "/",
-    "tags": [
-      {
-        "name": "Todo",
-        "description": "API for todos in the system"
-      },
-      {
-        "name": "Users",
-        "description": "API for users in the system"
-      }
-    ]
+    "title": "Bytefront",
+    "version": "1.0.0"
   },
   "paths": {
-    "/todo": {
-      "get": {
-        "tags": [
-          "Todo"
-        ],
-        "summary": "Get all todo",
-        "responses": {
-          "200": {
-            "description": "Returns a list of todos",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "completed": {
-                    "type": "boolean"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
+    "/user/register": {
       "post": {
-        "tags": [
-          "Todo"
-        ],
-        "summary": "Create a todo",
+        "tags": ["User"],
+        "summary": "Create a new user",
         "parameters": [
           {
-            "name": "body",
+            "name": "User",
             "in": "body",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
                   "type": "string"
                 },
-                "completed": {
-                  "type": "boolean"
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
                 }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "Returns the created todo",
+          "default": {
+            "description": "Successful operation"
+          }
+        },
+        "consumes": ["application/json"],
+        "produces": ["application/json"]
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Login a user",
+        "parameters": [
+          {
+            "name": "User",
+            "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
+                "username": {
                   "type": "string"
                 },
-                "name": {
+                "password": {
                   "type": "string"
-                },
-                "completed": {
-                  "type": "boolean"
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Successful operation"
+          }
+        },
+        "consumes": ["application/json"],
+        "produces": ["application/json"]
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Retrieve all users",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "Successful operation"
           }
         }
       }
     },
-    "/todo/{id}": {
+    "/user/{userId}": {
       "get": {
-        "tags": [
-          "Todo"
-        ],
-        "summary": "Get a single todo by ID",
+        "tags": ["User"],
+        "summary": "Retrieve single user",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
-          "200": {
-            "description": "Returns the specified todo",
+          "default": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/todo": {
+      "post": {
+        "tags": ["Todo"],
+        "summary": "Create a new todo",
+        "parameters": [
+          {
+            "name": "Todo",
+            "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
-                  "type": "string"
-                },
                 "name": {
                   "type": "string"
                 },
                 "completed": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 }
               }
             }
           }
-        }
-      },
-      "put": {
-        "tags": [
-          "Todo"
         ],
-        "summary": "Update a todo by ID",
+        "responses": {
+          "default": {
+            "description": "Successful operation"
+          }
+        },
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "get": {
+        "tags": ["Todo"],
+        "summary": "Retrieve all todos",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "Successful operation"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/todo/{todoId}": {
+      "get": {
+        "tags": ["Todo"],
+        "summary": "Retrieve single todo",
         "parameters": [
           {
-            "name": "id",
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Successful operation"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Todo"],
+        "summary": "Update a todo",
+        "parameters": [
+          {
+            "name": "todoId",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
-            "name": "body",
+            "name": "Todo",
             "in": "body",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
@@ -155,82 +203,47 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Returns the updated todo",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "completed": {
-                  "type": "boolean"
-                }
-              }
-            }
+          "default": {
+            "description": "Successful operation"
           }
-        }
+        },
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       },
       "delete": {
-        "tags": [
-          "Todo"
-        ],
-        "summary": "Delete a todo by ID",
+        "tags": ["Todo"],
+        "summary": "Delete a todo",
         "parameters": [
           {
-            "name": "id",
+            "name": "todoId",
             "in": "path",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
-          "200": {
-            "description": "Returns a success message",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+          "default": {
+            "description": "Successful operation"
           }
-        }
-      }
-    },
-    "/users": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get all users",
-        "responses": {
-          "200": {
-            "description": "Returns a list of users",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
+        },
+        "security": [
+          {
+            "Bearer": []
           }
-        }
+        ]
       }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
     }
   }
 }
