@@ -182,7 +182,7 @@
           }
         ]
       },
-      "put": {
+      "patch": {
         "tags": ["Todo"],
         "summary": "Update a todo",
         "parameters": [
